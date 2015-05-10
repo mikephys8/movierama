@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{% block title %}Home Page{% endblock %}</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{%  static "css/bootstrap.css" %}" >
+    <link rel="stylesheet" href="{%  static "css/bootstrap-theme.css" %}" >
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.2.2/tinysort.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse " role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% block links %} {% endblock %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% block links1 %} {% endblock %}
+            </ul>
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="/" >Home</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="page" >
+
+    <div id="content" class="container">
+        {% block content %}This is the content area{% endblock %}
+    </div>
+</div>
+
+<nav id="bottom" class="navbar navbar-default navbar-fixed-bottom navbar-inverse " role="navigation">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <h4 id="footer_text"><span  class="glyphicon glyphicon-copyright-mark copyright_color">2015</span><small>   powered by m@ikol</small></h4>
+        </ul>
+    </div>
+</nav>
+<script src="{% static 'js/action_calls.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
+

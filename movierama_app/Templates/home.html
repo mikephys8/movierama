@@ -1,0 +1,87 @@
+{% extends 'base_movierama.html' %}
+
+{% block links1 %}
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'logout'%}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'login'%}">Login</a></li>
+        <li><a href="{% url 'register'%}">Signup</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1> <strong> MovieRama </strong></h1>
+        <div class="row">
+            <div class="col-lg-12">
+                <span>Welcome back <a href="?username={{ user.username }}">{{ user }}</a></span>
+                <br>
+                <div style="border:groove">Sort by: <a id="sortByLikes" href="">Likes</a> | <a id="sortByHates" href="">Hates</a> | <a id="sortByDate"  href="">Date</a></div>
+                <br>
+            </div>
+            <div class="col-lg-10">
+                <div id="movielist">
+                    {% for movie in movies%}
+                        <div style="border: groove; padding: 3px;">
+                            <h4>{{ movie.title }}</h4>
+                            <p> Posted by
+                                {% if movie.creator.id == complete_user.id %}
+                                    <a href="">you</a>,
+                                {% else %}
+                                    <a href="?username={{ movie.creator.username }}">{{ movie.creator }}</a>,
+                                {% endif %}
+
+                                Created <span class="movie_date">{{movie.pub_date}}</span> days ago
+                            </p>
+                            <p>{{ movie.description }}</p>
+                            {% if movie.actions.likes != 1 and movie.actions.hates != 1 %}
+                                <p><a class="movie_likes" href="">{{ movie.actions.likes }} </a> Likes| <a class="movie_hates"  href="">{{ movie.actions.hates }} </a>Hates</p>
+                            {% elif  movie.actions.likes == 1 and movie.actions.hates  != 1 %}
+                                <p><a class="movie_likes" href="">{{ movie.actions.likes }} </a> Like | <a class="movie_hates" href="">{{ movie.actions.hates }} </a>Hate</p>
+                            {% elif  movie.actions.likes  != 1 and movie.actions.hates == 1 %}
+                                <p><a class="movie_likes" href="">{{ movie.actions.likes }} </a> Likes | <a class="movie_hates" href="">{{ movie.actions.hates }} </a>Hate</p>
+                            {% endif %}
+                            {% if movie.creator.id != complete_user.id %}
+                                <div class="align-right">
+                                    {% if movie.action_value == None %}
+                                        <button class="btn btn-success like" id="{{ movie.movie_id }}">like</button>
+                                        <button class="btn btn-success hate" id="{{ movie.movie_id }}">hate</button>
+                                    {% elif movie.action_value == 0 %}
+                                        <button class="btn btn-info undo" id="{{ movie.movie_id }}">unlike</button>
+                                    {% else %}
+                                        <button class="btn btn-info undo" id="{{ movie.movie_id }}">unhate</button>
+                                    {% endif %}
+
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-2">
+                    <a class="btn btn-success" href="{% url 'create_movie' %}">New Movie</a>
+            </div>
+        </div>
+    {% else %}
+        <h1>MovieRama</h1>
+        {% for movie in movies %}
+            <div style="border: double;padding: 3px;">
+                <h4>{{ movie.title }}</h4>
+                <p>Posted by <a href="?username={{ movie.creator.username }}">{{ movie.creator }}</a></p>
+                <p>{{ movie.description }}</p>
+                {% if movie.actions.likes != 1 and movie.actions.hates != 1 %}
+                    <p>{{ movie.actions.likes }} Likes | {{ movie.actions.hates }} Hates</p>
+                {% elif  movie.actions.likes == 1 and movie.actions.hates  != 1 %}
+                    <p>{{ movie.actions.likes }} Like | {{ movie.actions.hates }} Hates</p>
+                {% elif  movie.actions.likes  != 1 and movie.actions.hates == 1 %}
+                    <p>{{ movie.actions.likes }} Likes | {{ movie.actions.hates }} Hate</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,25 @@
+{% extends "base_movierama.html" %}
+{% load static %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Register your credentials</div>
+        <div class="panel-body">
+            {% if registered %}
+                <strong>Thank you for registering!</strong>
+                <a href="{% url 'home' %}">Return to the homepage.</a><br />
+            {% else %}
+                <form id="user_form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

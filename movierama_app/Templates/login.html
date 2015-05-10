@@ -1,0 +1,23 @@
+{% extends "base_movierama.html" %}
+{% load static %}
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Login with your credentials</div>
+        <div class="panel-body">
+            <form id="login_form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="InputUsername">Username</label>
+                    <input name="username" type="text" class="form-control" size="50" placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                    <label for="InputPassword1">Password</label>
+                    <input name="password" type="password" class="form-control" size="50" placeholder="Enter Password">
+                </div>
+                <button type="submit" class="btn btn-default">Login</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

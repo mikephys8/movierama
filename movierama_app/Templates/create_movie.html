@@ -1,0 +1,33 @@
+{% extends "base_movierama.html" %}
+
+{% block links1 %}
+    {% if user.is_authenticated %}
+        <li><a href="">{{ user }}</a></li>
+        <li><a href="{% url 'logout'%}">Logout</a></li>
+    {% else %}
+        <li><a href="{% url 'login'%}">Login</a></li>
+        <li><a href="{% url 'register'%}">Signup</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Create a new movie</div>
+        <div class="panel-body">
+            {% if user.is_authenticated %}
+                <form id="new_movie_form" action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
